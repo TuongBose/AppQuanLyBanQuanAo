@@ -1,0 +1,294 @@
+﻿<Window x:Class="AppQuanLyBanQuanAo_Nhom02.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AppQuanLyBanQuanAo_Nhom02"
+        xmlns:vm="clr-namespace:AppQuanLyBanQuanAo_Nhom02.ViewModels"
+        xmlns:uc="clr-namespace:AppQuanLyBanQuanAo_Nhom02.Views.UserControls"
+        mc:Ignorable="d"
+        Title="Phần Mềm Quản Lý Bán Quần Áo - Nhóm 02" Height="768" Width="1366"
+        WindowStartupLocation="CenterScreen">
+
+    <Window.DataContext>
+        <vm:MainViewModel/>
+    </Window.DataContext>
+
+    <Window.Resources>
+        <Style x:Key="MenuButtonStyle" TargetType="RadioButton">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#BDC3C7"/>
+            <Setter Property="Padding" Value="20,15"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Margin" Value="0,2"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="5" Padding="{TemplateBinding Padding}" Margin="10,0">
+                            <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#34495E"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter Property="Background" Value="#3498DB"/>
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter Property="FontWeight" Value="Bold"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ActionButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#2980B9"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Padding" Value="15,8"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="4" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#3498DB"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="LogoutButtonStyle" TargetType="Button" BasedOn="{StaticResource ActionButtonStyle}">
+            <Setter Property="Background" Value="#E74C3C"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="4" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#C0392B"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <DataTemplate DataType="{x:Type vm:TrangChuViewModel}">
+            <uc:TrangChuView/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type vm:HoaDonViewModel}">
+            <uc:HoaDonView/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type vm:SanPhamViewModel}">
+            <uc:SanPhamView/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type vm:LoaiSanPhamViewModel}">
+            <uc:LoaiSanPhamView/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type vm:KhachHangViewModel}">
+            <uc:KhachHangView/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type vm:NhapHangViewModel}">
+            <uc:NhapHangView/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type vm:NhanVienViewModel}">
+            <uc:NhanVienView/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type vm:BaoCaoViewModel}">
+            <uc:BaoCaoView/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type vm:SaoLuuViewModel}">
+            <uc:SaoLuuView/>
+        </DataTemplate>
+
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="65"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+
+        <Border Grid.Row="0" Background="#1A252F" BorderThickness="0,0,0,1" BorderBrush="#34495E">
+
+            <DockPanel LastChildFill="True" Margin="20,0">
+
+                <StackPanel DockPanel.Dock="Left" Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="HUIT02" Foreground="White" FontSize="24" FontWeight="ExtraBold" VerticalAlignment="Center"/>
+                    <TextBlock Text="MEN'S STORE" Foreground="#3498DB" FontSize="12" FontWeight="Bold" Margin="10,6,0,0" VerticalAlignment="Center"/>
+                </StackPanel>
+
+                <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="{Binding WelcomeMessage}" Foreground="White" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center" Margin="0,0,20,0"/>
+
+                    <Button Content="Đổi mật khẩu" Command="{Binding ChangePasswordCommand}" 
+                            Style="{StaticResource ActionButtonStyle}" Margin="0,0,10,0"/>
+
+                    <Button Content="Đăng xuất" Command="{Binding LogoutCommand}" 
+                            CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                            Style="{StaticResource LogoutButtonStyle}"/>
+                </StackPanel>
+
+                <Grid/>
+            </DockPanel>
+        </Border>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="260"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Border Background="#2C3E50" Grid.Column="0">
+                <ScrollViewer VerticalScrollBarVisibility="Hidden" Margin="0,20,0,0">
+                    <StackPanel>
+
+                        <RadioButton Content="Trang chủ" GroupName="MainMenu" Command="{Binding SwitchViewCommand}" CommandParameter="TrangChu">
+                            <RadioButton.Style>
+                                <Style TargetType="RadioButton" BasedOn="{StaticResource MenuButtonStyle}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding CurrentViewModelName}" Value="TrangChuViewModel">
+                                            <Setter Property="IsChecked" Value="True"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </RadioButton.Style>
+                        </RadioButton>
+
+                        <TextBlock Text="NGHIỆP VỤ" Foreground="#7F8C8D" FontSize="11" Margin="20,20,0,5" FontWeight="SemiBold"/>
+
+                        <RadioButton Content="Lập hóa đơn" GroupName="MainMenu" Command="{Binding SwitchViewCommand}" CommandParameter="HoaDon">
+                            <RadioButton.Style>
+                                <Style TargetType="RadioButton" BasedOn="{StaticResource MenuButtonStyle}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding CurrentViewModelName}" Value="HoaDonViewModel">
+                                            <Setter Property="IsChecked" Value="True"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </RadioButton.Style>
+                        </RadioButton>
+
+                        <RadioButton Content="Quản lý sản phẩm" GroupName="MainMenu" Command="{Binding SwitchViewCommand}" CommandParameter="SanPham">
+                            <RadioButton.Style>
+                                <Style TargetType="RadioButton" BasedOn="{StaticResource MenuButtonStyle}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding CurrentViewModelName}" Value="SanPhamViewModel">
+                                            <Setter Property="IsChecked" Value="True"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </RadioButton.Style>
+                        </RadioButton>
+
+                        <RadioButton Content="Quản lý loại sản phẩm" GroupName="MainMenu" Command="{Binding SwitchViewCommand}" CommandParameter="LoaiSP">
+                            <RadioButton.Style>
+                                <Style TargetType="RadioButton" BasedOn="{StaticResource MenuButtonStyle}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding CurrentViewModelName}" Value="LoaiSanPhamViewModel">
+                                            <Setter Property="IsChecked" Value="True"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </RadioButton.Style>
+                        </RadioButton>
+
+                        <RadioButton Content="Quản lý khách hàng" GroupName="MainMenu" Command="{Binding SwitchViewCommand}" CommandParameter="KhachHang">
+                            <RadioButton.Style>
+                                <Style TargetType="RadioButton" BasedOn="{StaticResource MenuButtonStyle}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding CurrentViewModelName}" Value="KhachHangViewModel">
+                                            <Setter Property="IsChecked" Value="True"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </RadioButton.Style>
+                        </RadioButton>
+
+                        <StackPanel Visibility="{Binding AdminSectionVisibility}">
+                            <TextBlock Text="HỆ THỐNG" Foreground="#7F8C8D" FontSize="11" Margin="20,20,0,5" FontWeight="SemiBold" Visibility="{Binding AdminOnlyVisibility}"/>
+
+                            <RadioButton Content="Nhập hàng" GroupName="MainMenu" Command="{Binding SwitchViewCommand}" CommandParameter="NhapHang" Visibility="{Binding AdminOnlyVisibility}">
+                                <RadioButton.Style>
+                                    <Style TargetType="RadioButton" BasedOn="{StaticResource MenuButtonStyle}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding CurrentViewModelName}" Value="NhapHangViewModel">
+                                                <Setter Property="IsChecked" Value="True"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </RadioButton.Style>
+                            </RadioButton>
+
+                            <RadioButton Content="Quản lý nhân viên" GroupName="MainMenu" Command="{Binding SwitchViewCommand}" CommandParameter="NhanVien" Visibility="{Binding AdminOnlyVisibility}">
+                                <RadioButton.Style>
+                                    <Style TargetType="RadioButton" BasedOn="{StaticResource MenuButtonStyle}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding CurrentViewModelName}" Value="NhanVienViewModel">
+                                                <Setter Property="IsChecked" Value="True"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </RadioButton.Style>
+                            </RadioButton>
+
+                            <RadioButton Content="Báo cáo doanh thu" GroupName="MainMenu" Command="{Binding SwitchViewCommand}" CommandParameter="BaoCao" Visibility="{Binding AdminOnlyVisibility}">
+                                <RadioButton.Style>
+                                    <Style TargetType="RadioButton" BasedOn="{StaticResource MenuButtonStyle}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding CurrentViewModelName}" Value="BaoCaoViewModel">
+                                                <Setter Property="IsChecked" Value="True"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </RadioButton.Style>
+                            </RadioButton>
+
+                            <RadioButton Content="Sao lưu &amp; Phục hồi" GroupName="MainMenu" Command="{Binding SwitchViewCommand}" CommandParameter="SaoLuu" Visibility="{Binding AdminOnlyVisibility}">
+                                <RadioButton.Style>
+                                    <Style TargetType="RadioButton" BasedOn="{StaticResource MenuButtonStyle}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding CurrentViewModelName}" Value="SaoLuuViewModel">
+                                                <Setter Property="IsChecked" Value="True"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </RadioButton.Style>
+                            </RadioButton>
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+
+            <Border Grid.Column="1" Background="#ECF0F1">
+                <Grid Margin="20">
+                    <ContentControl Content="{Binding CurrentView}" 
+                                HorizontalAlignment="Stretch" 
+                                VerticalAlignment="Stretch"/>
+                </Grid>
+            </Border>
+
+        </Grid>
+    </Grid>
+</Window>

@@ -1,0 +1,283 @@
+﻿using AppQuanLyBanQuanAo_Nhom02.Models;
+using AppQuanLyBanQuanAo_Nhom02.Data;
+using System;
+using System.Collections.ObjectModel;
+using System.Windows.Input;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Linq;
+
+namespace AppQuanLyBanQuanAo_Nhom02.ViewModels
+{
+    public class KhachHangViewModel : INotifyPropertyChanged
+    {
+        private DatabaseService _databaseService = new DatabaseService();
+        private ObservableCollection<KhachHang> _danhSachKhachHang;
+        private KhachHang _khachHangDangChon;
+        private KhachHang _khachHangMoi;
+        private string _timKiem = "";
+        private bool _isLoading = false;
+        private string _thongBao = "";
+
+        public ObservableCollection<KhachHang> DanhSachKhachHang
+        {
+            get { return _danhSachKhachHang; }
+            set { _danhSachKhachHang = value; OnPropertyChanged(); }
+        }
+
+        public KhachHang KhachHangDangChon
+        {
+            get { return _khachHangDangChon; }
+            set 
+            { 
+                _khachHangDangChon = value;
+                if (value != null)
+                {
+                    KhachHangMoi = new KhachHang
+                    {
+                        MaKH = value.MaKH,
+                        TenKH = value.TenKH,
+                        SDT = value.SDT,
+                        DiemTichLuy = value.DiemTichLuy
+                    };
+                }
+                OnPropertyChanged();
+            }
+        }
+
+        public KhachHang KhachHangMoi
+        {
+            get { return _khachHangMoi; }
+            set { _khachHangMoi = value; OnPropertyChanged(); }
+        }
+
+        public string TimKiem
+        {
+            get { return _timKiem; }
+            set { _timKiem = value; OnPropertyChanged(); }
+        }
+
+        public bool IsLoading
+        {
+            get { return _isLoading; }
+            set { _isLoading = value; OnPropertyChanged(); }
+        }
+
+        public string ThongBao
+        {
+            get { return _thongBao; }
+            set { _thongBao = value; OnPropertyChanged(); }
+        }
+
+        public ICommand TaiDuLieuCommand { get; }
+        public ICommand ThemKhachHangCommand { get; }
+        public ICommand SuaKhachHangCommand { get; }
+        public ICommand XoaKhachHangCommand { get; }
+        public ICommand TimKiemCommand { get; }
+        public ICommand LamMoiCommand { get; }
+
+        public KhachHangViewModel()
+        {
+            DanhSachKhachHang = new ObservableCollection<KhachHang>();
+            KhachHangMoi = new KhachHang();
+
+            TaiDuLieuCommand = new RelayCommand(_ => TaiDuLieu());
+            ThemKhachHangCommand = new RelayCommand(_ => ThemKhachHang(), _ => CanThemKhachHang());
+            SuaKhachHangCommand = new RelayCommand(_ => SuaKhachHang(), _ => CanSuaKhachHang());
+            XoaKhachHangCommand = new RelayCommand(_ => XoaKhachHang(), _ => CanXoaKhachHang());
+            TimKiemCommand = new RelayCommand(_ => TimKiemKhachHang());
+            LamMoiCommand = new RelayCommand(_ => LamMoi());
+
+            TaiDuLieu();
+        }
+
+        private void TaiDuLieu()
+        {
+            try
+            {
+                IsLoading = true;
+                // TODO: Gọi DatabaseService để lấy danh sách khách hàng
+                // var danhSach = _databaseService.GetAllKhachHang();
+                DanhSachKhachHang.Clear();
+                DanhSachKhachHang.Add(new KhachHang { MaKH = 1, TenKH = "Nguyễn Văn A", SDT = "0123456789", DiemTichLuy = 100 });
+                DanhSachKhachHang.Add(new KhachHang { MaKH = 2, TenKH = "Trần Thị B", SDT = "0987654321", DiemTichLuy = 250 });
+                DanhSachKhachHang.Add(new KhachHang { MaKH = 3, TenKH = "Lê Văn C", SDT = "0912345678", DiemTichLuy = 150 });
+                ThongBao = "Tải dữ liệu thành công!";
+            }
+            catch (Exception ex)
+            {
+                ThongBao = $"Lỗi: {ex.Message}";
+            }
+            finally
+            {
+                IsLoading = false;
+            }
+        }
+
+        private void ThemKhachHang()
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(KhachHangMoi.TenKH))
+                {
+                    ThongBao = "Vui lòng nhập tên khách hàng!";
+                    return;
+                }
+
+                // TODO: Gọi DatabaseService để thêm khách hàng
+                // _databaseService.AddKhachHang(KhachHangMoi);
+
+                DanhSachKhachHang.Add(new KhachHang
+                {
+                    MaKH = (DanhSachKhachHang.Any() ? DanhSachKhachHang.Max(x => x.MaKH) : 0) + 1,
+                    TenKH = KhachHangMoi.TenKH,
+                    SDT = KhachHangMoi.SDT,
+                    DiemTichLuy = 0
+                });
+
+                KhachHangMoi = new KhachHang();
+                ThongBao = "Thêm khách hàng thành công!";
+            }
+            catch (Exception ex)
+            {
+                ThongBao = $"Lỗi: {ex.Message}";
+            }
+        }
+
+        private void SuaKhachHang()
+        {
+            try
+            {
+                if (KhachHangDangChon == null)
+                {
+                    ThongBao = "Vui lòng chọn khách hàng để sửa!";
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(KhachHangMoi.TenKH))
+                {
+                    ThongBao = "Vui lòng nhập tên khách hàng!";
+                    return;
+                }
+
+                KhachHangDangChon.TenKH = KhachHangMoi.TenKH;
+                KhachHangDangChon.SDT = KhachHangMoi.SDT;
+                KhachHangDangChon.DiemTichLuy = KhachHangMoi.DiemTichLuy;
+
+                // TODO: Gọi DatabaseService để cập nhật
+                // _databaseService.UpdateKhachHang(KhachHangDangChon);
+
+                OnPropertyChanged(nameof(DanhSachKhachHang));
+                ThongBao = "Cập nhật khách hàng thành công!";
+            }
+            catch (Exception ex)
+            {
+                ThongBao = $"Lỗi: {ex.Message}";
+            }
+        }
+
+        private void XoaKhachHang()
+        {
+            try
+            {
+                if (KhachHangDangChon == null)
+                {
+                    ThongBao = "Vui lòng chọn khách hàng để xóa!";
+                    return;
+                }
+
+                // TODO: Gọi DatabaseService để xóa
+                // _databaseService.DeleteKhachHang(KhachHangDangChon.MaKH);
+
+                DanhSachKhachHang.Remove(KhachHangDangChon);
+                KhachHangDangChon = null;
+                KhachHangMoi = new KhachHang();
+                ThongBao = "Xóa khách hàng thành công!";
+            }
+            catch (Exception ex)
+            {
+                ThongBao = $"Lỗi: {ex.Message}";
+            }
+        }
+
+        private void TimKiemKhachHang()
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(TimKiem))
+                {
+                    TaiDuLieu();
+                    return;
+                }
+
+                var ketQua = DanhSachKhachHang.Where(x =>
+                    x.TenKH.Contains(TimKiem, StringComparison.OrdinalIgnoreCase) ||
+                    x.SDT.Contains(TimKiem)
+                ).ToList();
+
+                DanhSachKhachHang.Clear();
+                foreach (var kh in ketQua)
+                {
+                    DanhSachKhachHang.Add(kh);
+                }
+
+                ThongBao = $"Tìm thấy {ketQua.Count} khách hàng";
+            }
+            catch (Exception ex)
+            {
+                ThongBao = $"Lỗi: {ex.Message}";
+            }
+        }
+
+        private void LamMoi()
+        {
+            TimKiem = "";
+            KhachHangMoi = new KhachHang();
+            KhachHangDangChon = null;
+            TaiDuLieu();
+        }
+
+        private bool CanThemKhachHang()
+        {
+            return !string.IsNullOrWhiteSpace(KhachHangMoi?.TenKH);
+        }
+
+        private bool CanSuaKhachHang()
+        {
+            return KhachHangDangChon != null && !string.IsNullOrWhiteSpace(KhachHangMoi?.TenKH);
+        }
+
+        private bool CanXoaKhachHang()
+        {
+            return KhachHangDangChon != null;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+    }
+
+    public class RelayCommand : ICommand
+    {
+        private readonly Action<object> _execute;
+        private readonly Predicate<object> _canExecute;
+
+        public RelayCommand(Action<object> execute, Predicate<object> canExecute = null)
+        {
+            _execute = execute ?? throw new ArgumentNullException(nameof(execute));
+            _canExecute = canExecute;
+        }
+
+        public event EventHandler CanExecuteChanged
+        {
+            add { CommandManager.RequerySuggested += value; }
+            remove { CommandManager.RequerySuggested -= value; }
+        }
+
+        public bool CanExecute(object parameter) => _canExecute?.Invoke(parameter) ?? true;
+        public void Execute(object parameter) => _execute(parameter);
+    }
+}

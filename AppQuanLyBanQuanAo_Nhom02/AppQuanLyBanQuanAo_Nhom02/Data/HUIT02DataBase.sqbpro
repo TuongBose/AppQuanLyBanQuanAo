@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="HUIT02DataBase.db" readonly="0" foreign_keys="1" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="structure browser pragmas query" current="3"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="100"/><column_width id="3" width="2248"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><table title="ChiTietHoaDon" custom_title="0" dock_id="1" table="4,13:mainChiTietHoaDon"/><dock_state state="000000ff00000000fd00000001000000020000000000000000fc0100000001fb000000160064006f0063006b00420072006f00770073006500310100000000ffffffff0000011700ffffff000000000000000000000004000000040000000800000008fc00000000"/><default_encoding codec=""/><browse_table_settings/></tab_browse><tab_sql><sql name="SQL 1*">CREATE TABLE NhanVien (
+    MaNV INTEGER PRIMARY KEY AUTOINCREMENT,
+    TenNV TEXT NOT NULL,
+    SDT TEXT,
+    Username TEXT UNIQUE NOT NULL,
+    PasswordHash TEXT NOT NULL,
+    Role INTEGER DEFAULT 0,  -- 1: Admin, 0: Nhân viên
+    TrangThai INTEGER DEFAULT 1 -- 1: Đang làm việc, 0: Đã nghỉ/Khóa
+);
+
+CREATE TABLE KhachHang (
+    MaKH INTEGER PRIMARY KEY AUTOINCREMENT,
+    TenKH TEXT NOT NULL,
+    SDT TEXT UNIQUE NOT NULL,
+    DiemTichLuy INTEGER DEFAULT 0
+);
+
+CREATE TABLE MaXacNhan (
+    Id INTEGER PRIMARY KEY AUTOINCREMENT,
+    Code TEXT UNIQUE NOT NULL,
+    ThoiGianTao TEXT NOT NULL, -- Lưu chuẩn ISO8601: YYYY-MM-DD HH:MM:SS
+    DaSuDung INTEGER DEFAULT 0 -- 1: Đã dùng, 0: Chưa dùng
+);
+
+CREATE TABLE LoaiSanPham (
+    MaLoai INTEGER PRIMARY KEY AUTOINCREMENT,
+    TenLoai TEXT NOT NULL UNIQUE
+);
+
+CREATE TABLE SanPham (
+    MaSP INTEGER PRIMARY KEY AUTOINCREMENT,
+    MaLoai INTEGER NOT NULL,
+    TenSP TEXT NOT NULL,
+    Size TEXT,     -- S, M, L, XL, 32, 34...
+    MauSac TEXT,
+    GiaBan INTEGER NOT NULL,
+    SoLuongTon INTEGER DEFAULT 0,
+    HinhAnh TEXT,  -- Chỉ lưu tên file ảnh (VD: ao-thun-01.jpg)
+    FOREIGN KEY (MaLoai) REFERENCES LoaiSanPham(MaLoai) ON DELETE RESTRICT
+);
+
+CREATE TABLE HoaDon (
+    MaHD INTEGER PRIMARY KEY AUTOINCREMENT,
+    MaNV INTEGER NOT NULL,
+    MaKH INTEGER NOT NULL,
+    NgayLap TEXT NOT NULL, -- Format: YYYY-MM-DD HH:MM:SS
+    TongTien INTEGER DEFAULT 0,
+    FOREIGN KEY (MaNV) REFERENCES NhanVien(MaNV),
+    FOREIGN KEY (MaKH) REFERENCES KhachHang(MaKH)
+);
+
+CREATE TABLE ChiTietHoaDon (
+    MaHD INTEGER NOT NULL,
+    MaSP INTEGER NOT NULL,
+    SoLuong INTEGER NOT NULL,
+    DonGia INTEGER NOT NULL, -- Lưu lại giá tại thời điểm bán
+    PRIMARY KEY (MaHD, MaSP),
+    FOREIGN KEY (MaHD) REFERENCES HoaDon(MaHD) ON DELETE CASCADE,
+    FOREIGN KEY (MaSP) REFERENCES SanPham(MaSP)
+);
+
+CREATE TABLE PhieuNhap (
+    MaPN INTEGER PRIMARY KEY AUTOINCREMENT,
+    MaNV INTEGER NOT NULL,
+    NhaCungCap TEXT NOT NULL,
+    NgayNhap TEXT NOT NULL,
+    TongTien INTEGER DEFAULT 0,
+    FOREIGN KEY (MaNV) REFERENCES NhanVien(MaNV)
+);
+
+CREATE TABLE ChiTietPhieuNhap (
+    MaPN INTEGER NOT NULL,
+    MaSP INTEGER NOT NULL,
+    SoLuongNhap INTEGER NOT NULL,
+    GiaNhap INTEGER NOT NULL,
+    PRIMARY KEY (MaPN, MaSP),
+    FOREIGN KEY (MaPN) REFERENCES PhieuNhap(MaPN) ON DELETE CASCADE,
+    FOREIGN KEY (MaSP) REFERENCES SanPham(MaSP)
+);</sql><current_tab id="0"/></tab_sql></sqlb_project>

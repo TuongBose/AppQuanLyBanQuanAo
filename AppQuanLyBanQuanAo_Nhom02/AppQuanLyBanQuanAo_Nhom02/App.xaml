@@ -1,0 +1,9 @@
+﻿<Application x:Class="AppQuanLyBanQuanAo_Nhom02.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:AppQuanLyBanQuanAo_Nhom02"
+             StartupUri="Views\Windows\LoginWindow.xaml">
+    <Application.Resources>
+         
+    </Application.Resources>
+</Application>

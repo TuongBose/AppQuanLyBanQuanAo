@@ -1,0 +1,70 @@
+﻿<Window x:Class="AppQuanLyBanQuanAo_Nhom02.Views.Windows.RegisterWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AppQuanLyBanQuanAo_Nhom02.Views.Windows"
+        xmlns:vm="clr-namespace:AppQuanLyBanQuanAo_Nhom02.ViewModels"
+        mc:Ignorable="d"
+        Title="Đăng Ký Tài Khoản" Height="600" Width="450" WindowStartupLocation="CenterScreen" Name="RegisterWin">
+
+    <Window.DataContext>
+        <vm:RegisterViewModel/>
+    </Window.DataContext>
+    
+    <StackPanel Margin="30,10,30,10" VerticalAlignment="Center">
+        <TextBlock Text="ĐĂNG KÝ NHÂN VIÊN" FontSize="22" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,15"/>
+
+        <TextBlock Text="Họ và Tên (*):" />
+        <TextBox Text="{Binding HoTen, UpdateSourceTrigger=PropertyChanged}"
+                 KeyDown="FocusNext_KeyDown"
+                 BorderBrush="{Binding HoTenBorder}" 
+                 BorderThickness="1" 
+                 Margin="0,2,0,0" 
+                 Padding="5"/>
+        <TextBlock Text="{Binding HoTenError}" Foreground="Red" FontSize="11" Margin="0,2,0,10" TextWrapping="Wrap"/>
+
+        <TextBlock Text="Số điện thoại (*):" />
+        <TextBox Text="{Binding Sdt, UpdateSourceTrigger=PropertyChanged}"
+                 KeyDown="FocusNext_KeyDown"
+                 BorderBrush="{Binding SdtBorder}" 
+                 BorderThickness="1" 
+                 Margin="0,2,0,0" 
+                 Padding="5"/>
+        <TextBlock Text="{Binding SdtError}" Foreground="Red" FontSize="11" Margin="0,2,0,10"/>
+
+        <TextBlock Text="Tên đăng nhập (*):" />
+        <TextBox Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}" 
+                 KeyDown="FocusNext_KeyDown"
+                 BorderBrush="{Binding UsernameBorder}" 
+                 BorderThickness="1" 
+                 Margin="0,2,0,0" 
+                 Padding="5"/>
+        <TextBlock Text="{Binding UsernameError}" Foreground="Red" FontSize="11" Margin="0,2,0,10"/>
+
+        <TextBlock Text="Mật khẩu (*):" />
+        <TextBox Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}" 
+                 KeyDown="FocusNext_KeyDown"
+                 BorderBrush="{Binding PasswordBorder}" 
+                 BorderThickness="1" 
+                 Margin="0,2,0,0" 
+                 Padding="5"/>
+        <TextBlock Text="{Binding PasswordError}" Foreground="Red" FontSize="11" Margin="0,2,0,10" TextWrapping="Wrap"/>
+
+        <TextBlock Text="Nhập lại mật khẩu (*):" />
+        <TextBox Text="{Binding ConfirmPassword, UpdateSourceTrigger=PropertyChanged}" 
+                 BorderBrush="{Binding ConfirmPasswordBorder}" BorderThickness="1" Margin="0,2,0,0" Padding="5"/>
+        <TextBlock Text="{Binding ConfirmPasswordError}" Foreground="Red" FontSize="11" Margin="0,2,0,10"/>
+        
+        <Button Content="Tạo Tài Khoản" 
+                IsDefault="True"
+                Command="{Binding RegisterCommand}" 
+                CommandParameter="{Binding ElementName=RegisterWin}"
+                Height="35" Background="SeaGreen" Foreground="White" FontWeight="Bold" Margin="0,5,0,10"/>
+
+        <Button Content="Quay lại Đăng nhập" Command="{Binding GoToLoginCommand}" 
+                CommandParameter="{Binding ElementName=RegisterWin}"
+                Height="30" Background="Transparent" BorderThickness="0" Foreground="Blue" Cursor="Hand"/>
+    </StackPanel>
+
+</Window>

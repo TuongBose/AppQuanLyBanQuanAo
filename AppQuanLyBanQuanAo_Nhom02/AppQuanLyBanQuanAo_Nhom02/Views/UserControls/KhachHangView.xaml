@@ -1,0 +1,303 @@
+﻿<UserControl x:Class="AppQuanLyBanQuanAo_Nhom02.Views.UserControls.KhachHangView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AppQuanLyBanQuanAo_Nhom02.Views.UserControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="650" d:DesignWidth="1200">
+
+    <Grid Margin="0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="6.5*"/>
+            <ColumnDefinition Width="3.5*"/>
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Column="0" Background="White" CornerRadius="8" Margin="0,0,10,0" BorderBrush="#E0E0E0" BorderThickness="1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0" Margin="15,15,15,15">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="🔍 Tra cứu:" FontWeight="Bold" FontSize="14" Foreground="#2C3E50" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                    <Border Grid.Column="1" BorderBrush="#3498DB" BorderThickness="1" CornerRadius="5" Background="White">
+                        <Grid>
+                            <TextBlock Text="Nhập tên hoặc số điện thoại khách hàng..." Foreground="#95A5A6" FontSize="14" FontStyle="Italic" VerticalAlignment="Center" Padding="14,0" IsHitTestVisible="False">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Visibility" Value="Hidden"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Text.Length, ElementName=txtSearchKH}" Value="0">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                            <TextBox x:Name="txtSearchKH" Text="{Binding TimKiem, UpdateSourceTrigger=PropertyChanged}" Padding="10,8" FontSize="14" BorderThickness="0" Background="Transparent" VerticalContentAlignment="Center"/>
+                        </Grid>
+                    </Border>
+                </Grid>
+
+                <DataGrid Grid.Row="1" ItemsSource="{Binding DanhSachKhachHang}" SelectedItem="{Binding KhachHangDangChon}"
+                          AutoGenerateColumns="False" IsReadOnly="True" RowHeight="40"
+                          HeadersVisibility="Column" GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="#ECF0F1" 
+                          Background="White" BorderBrush="#BDC3C7" BorderThickness="1"
+                          RowBackground="White" AlternatingRowBackground="#F8F9FA" x:Name="dgKhachHang" SelectionUnit="FullRow" SelectionMode="Extended" Cursor="Hand">
+                    <DataGrid.Resources>
+                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#0078D7"/>
+                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="White"/>
+                        <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="#0078D7"/>
+                        <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}" Color="White"/>
+                        <Style x:Key="CenterAlign" TargetType="TextBlock">
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                        </Style>
+                    </DataGrid.Resources>
+                    <DataGrid.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                            <Setter Property="BorderThickness" Value="0"/>
+                        </Style>
+                    </DataGrid.CellStyle>
+                    <DataGrid.ColumnHeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="Background" Value="#34495E"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                            <Setter Property="Padding" Value="10,8"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        </Style>
+                    </DataGrid.ColumnHeaderStyle>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="STT" Binding="{Binding STT}" Width="60" ElementStyle="{StaticResource CenterAlign}"/>
+
+                        <DataGridTextColumn Header="Mã KH" Binding="{Binding MaKH_Display}" Width="80" ElementStyle="{StaticResource CenterAlign}"/>
+
+                        <DataGridTextColumn Header="Tên khách hàng" Binding="{Binding TenKH}" Width="*">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="VerticalAlignment" Value="Center"/>
+                                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                                    <Setter Property="FontWeight" Value="SemiBold"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="Số điện thoại" Binding="{Binding SDT}" Width="130" ElementStyle="{StaticResource CenterAlign}"/>
+                        <DataGridTextColumn Header="Điểm tích lũy" Binding="{Binding DiemTichLuy}" Width="110" ElementStyle="{StaticResource CenterAlign}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </Border>
+
+        <Border Grid.Column="1" Background="White" CornerRadius="8" Padding="15" BorderBrush="#E0E0E0" BorderThickness="1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" Text="👤 THÔNG TIN KHÁCH HÀNG" FontWeight="Bold" FontSize="15" Foreground="#34495E" Margin="0,0,0,15"/>
+
+                <StackPanel Grid.Row="1">
+                    <StackPanel Margin="0,0,0,15">
+                        <TextBlock Text="Tên khách hàng *" FontWeight="SemiBold" FontSize="13" Foreground="#34495E" Margin="0,0,0,5"/>
+                        <Border CornerRadius="4" Background="#F8F9FA">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="BorderBrush" Value="#BDC3C7"/>
+                                    <Setter Property="BorderThickness" Value="1"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding HasLoiTenKH}" Value="True">
+                                            <Setter Property="BorderBrush" Value="#E74C3C"/>
+                                            <Setter Property="BorderThickness" Value="1.5"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <Grid>
+                                <TextBlock Text="VD: Nguyễn Văn A" Foreground="#BDC3C7" FontSize="14" FontStyle="Italic" VerticalAlignment="Center" Padding="12,0" IsHitTestVisible="False">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Visibility" Value="Hidden"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text.Length, ElementName=txtTenKH}" Value="0">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                                <TextBox x:Name="txtTenKH" Text="{Binding KhachHangMoi.TenKH, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                         Padding="12,10" FontSize="14" Background="Transparent" BorderThickness="0"
+                                         PreviewTextInput="txtTenKH_PreviewTextInput" 
+                                         TextChanged="txtTenKH_TextChanged"
+                                         LostFocus="txtTenKH_LostFocus"
+                                         PreviewKeyDown="txtTenKH_PreviewKeyDown"/>
+                            </Grid>
+                        </Border>
+                        <TextBlock Text="{Binding LoiTenKH}" Foreground="#E74C3C" FontSize="12" FontStyle="Italic" Margin="0,4,0,0">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding HasLoiTenKH}" Value="True">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </StackPanel>
+
+                    <StackPanel Margin="0,0,0,15">
+                        <TextBlock Text="Số điện thoại *" FontWeight="SemiBold" FontSize="13" Foreground="#34495E" Margin="0,0,0,5"/>
+                        <Border CornerRadius="4" Background="#F8F9FA">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="BorderBrush" Value="#BDC3C7"/>
+                                    <Setter Property="BorderThickness" Value="1"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding HasLoiSDT}" Value="True">
+                                            <Setter Property="BorderBrush" Value="#E74C3C"/>
+                                            <Setter Property="BorderThickness" Value="1.5"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <Grid>
+                                <TextBlock Text="VD: 0912345678" Foreground="#BDC3C7" FontSize="14" FontStyle="Italic" VerticalAlignment="Center" Padding="12,0" IsHitTestVisible="False">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Visibility" Value="Hidden"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text.Length, ElementName=txtSDT}" Value="0">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                                <TextBox x:Name="txtSDT" Text="{Binding KhachHangMoi.SDT, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                         Padding="12,10" FontSize="14" Background="Transparent" BorderThickness="0" MaxLength="10"
+                                         InputMethod.IsInputMethodEnabled="False"
+                                         PreviewTextInput="txtSDT_PreviewTextInput" 
+                                         PreviewKeyDown="txtSDT_PreviewKeyDown"
+                                         TextChanged="txtSDT_TextChanged"/>
+                            </Grid>
+                        </Border>
+                        <TextBlock Text="{Binding LoiSDT}" Foreground="#E74C3C" FontSize="12" FontStyle="Italic" Margin="0,4,0,0">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding HasLoiSDT}" Value="True">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </StackPanel>
+
+                    <StackPanel Margin="0,0,0,15">
+                        <TextBlock Text="Điểm tích lũy" FontWeight="SemiBold" FontSize="13" Foreground="#34495E" Margin="0,0,0,5"/>
+                        <Border BorderBrush="#BDC3C7" BorderThickness="1" CornerRadius="4" Background="#F8F9FA">
+                            <Grid>
+                                <TextBlock Text="VD: 0" Foreground="#BDC3C7" FontSize="14" FontStyle="Italic" VerticalAlignment="Center" Padding="12,0" IsHitTestVisible="False">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Visibility" Value="Hidden"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text.Length, ElementName=txtDiem}" Value="0">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+
+                                <TextBox x:Name="txtDiem" Text="{Binding KhachHangMoi.DiemTichLuy, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                         Padding="12,10" FontSize="14" Background="Transparent" BorderThickness="0" FontWeight="Bold" Foreground="#3498DB"
+                                         InputMethod.IsInputMethodEnabled="False"
+                                         PreviewTextInput="txtSDT_PreviewTextInput" 
+                                         TextChanged="txtSDT_TextChanged"
+                                         PreviewKeyDown="txtDiem_PreviewKeyDown"/>
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+                </StackPanel>
+
+                <StackPanel Grid.Row="2" Margin="0,15,0,0">
+                    <Button x:Name="btnThem" Command="{Binding ThemKhachHangCommand}" Height="45" Background="#27AE60" Foreground="White" FontSize="14" FontWeight="Bold" Cursor="Hand" Margin="0,0,0,10" BorderThickness="0">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="➕" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                            <TextBlock Text="Thêm Khách Hàng" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="6"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="8"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="8"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Button Grid.Column="0" Command="{Binding SuaKhachHangCommand}" Height="40" Background="#F39C12" Foreground="White" FontSize="13" FontWeight="Bold" Cursor="Hand" BorderThickness="0">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="✎" Margin="0,0,5,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="Cập nhật" VerticalAlignment="Center"/>
+                            </StackPanel>
+                            <Button.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius" Value="6"/>
+                                </Style>
+                            </Button.Resources>
+                        </Button>
+
+                        <Button Grid.Column="2" Command="{Binding XoaKhachHangCommand}" 
+                                CommandParameter="{Binding SelectedItems, ElementName=dgKhachHang}" 
+                                Height="40" Background="#E74C3C" Foreground="White" FontSize="13" FontWeight="Bold" Cursor="Hand" BorderThickness="0">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="🗑️" Margin="0,0,5,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="Xóa" VerticalAlignment="Center"/>
+                            </StackPanel>
+                            <Button.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius" Value="6"/>
+                                </Style>
+                            </Button.Resources>
+                        </Button>
+
+                        <Button Grid.Column="4" Command="{Binding LamMoiCommand}" Height="40" Background="#95A5A6" Foreground="White" FontSize="13" FontWeight="Bold" Cursor="Hand" BorderThickness="0">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="🔄" Margin="0,0,5,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="Làm mới" VerticalAlignment="Center"/>
+                            </StackPanel>
+                            <Button.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius" Value="6"/>
+                                </Style>
+                            </Button.Resources>
+                        </Button>
+                    </Grid>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+
+</UserControl>

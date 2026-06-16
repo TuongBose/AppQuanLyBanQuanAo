@@ -1,0 +1,378 @@
+﻿<UserControl x:Class="AppQuanLyBanQuanAo_Nhom02.Views.UserControls.NhapHangView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AppQuanLyBanQuanAo_Nhom02.Views.UserControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="700" d:DesignWidth="1200">
+    <Grid Background="#F5F5F5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Border Grid.Row="0" Background="#16A085">
+            <StackPanel Margin="20">
+                <TextBlock Text="QUẢN LÝ NHẬP HÀNG" FontSize="24" FontWeight="Bold" Foreground="White"/>
+                <TextBlock Text="Tạo và quản lý phiếu nhập hàng từ nhà cung cấp" FontSize="12" Foreground="#D5F4E6" Margin="0,5,0,0"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Top Toolbar -->
+        <Border Grid.Row="1" Background="White">
+            <Grid Margin="20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="🔍 Tìm nhà cung cấp:" VerticalAlignment="Center" Margin="0,0,10,0" FontSize="12" Foreground="#34495E"/>
+                    <TextBox x:Name="TimKiemTextBox" 
+                             Text="{Binding TimKiem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                             Width="250" 
+                             Padding="10,8" 
+                             FontSize="12"
+                             Background="White"
+                             Foreground="#2C3E50"
+                             BorderBrush="#BDC3C7"
+                             BorderThickness="1">
+                    </TextBox>
+                </StackPanel>
+
+                <Button Grid.Column="1" 
+                        Command="{Binding TimKiemCommand}"
+                        Padding="15,8" 
+                        Margin="10,0,5,0"
+                        Background="#16A085" 
+                        Foreground="White"
+                        FontWeight="Bold"
+                        FontSize="12"
+                        Cursor="Hand"
+                        Content="🔍 Tìm">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="#16A085"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#117A65"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+
+                <Button Grid.Column="2" 
+                        Command="{Binding TaoPhieuNhapCommand}"
+                        Padding="15,8" 
+                        Margin="5,0"
+                        Background="#27AE60" 
+                        Foreground="White"
+                        FontWeight="Bold"
+                        FontSize="12"
+                        Cursor="Hand"
+                        Content="✓ Tạo mới">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="#27AE60"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#229954"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+
+                <Button Grid.Column="3" 
+                        Command="{Binding LamMoiCommand}"
+                        Padding="15,8" 
+                        Margin="5,0,0,0"
+                        Background="#95A5A6" 
+                        Foreground="White"
+                        FontWeight="Bold"
+                        FontSize="12"
+                        Cursor="Hand"
+                        Content="🔄 Làm mới">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="#95A5A6"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#7F8C8D"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+            </Grid>
+        </Border>
+
+        <!-- Main Content -->
+        <Grid Grid.Row="2" Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" MinWidth="400"/>
+                <ColumnDefinition Width="400" MinWidth="350"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Danh sách phiếu nhập -->
+            <Border Grid.Column="0" 
+                    Background="White" 
+                    BorderBrush="#BDC3C7" 
+                    BorderThickness="1"
+                    CornerRadius="4"
+                    Margin="0,0,10,0">
+                <DockPanel>
+                    <TextBlock DockPanel.Dock="Top"
+                               Text="DANH SÁCH PHIẾU NHẬP" 
+                               Background="#16A085" 
+                               Foreground="White" 
+                               Padding="15,10" 
+                               FontWeight="Bold"
+                               FontSize="13"/>
+                    <DataGrid x:Name="PhieuNhapGrid"
+                              ItemsSource="{Binding DanhSachPhieuNhap}"
+                              SelectedItem="{Binding PhieuNhapDangChon}"
+                              AutoGenerateColumns="False"
+                              Background="White"
+                              Foreground="#2C3E50"
+                              GridLinesVisibility="Horizontal"
+                              HeadersVisibility="Column"
+                              Margin="0"
+                              BorderThickness="0">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Mã PN" Binding="{Binding MaPN}" Width="50" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Nhà cung cấp" Binding="{Binding NhaCungCap}" Width="*" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Ngày nhập" Binding="{Binding NgayNhap}" Width="100" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Tổng tiền" Binding="{Binding TongTien}" Width="100" IsReadOnly="True"/>
+                        </DataGrid.Columns>
+                        <DataGrid.RowStyle>
+                            <Style TargetType="DataGridRow">
+                                <Setter Property="Background" Value="White"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter Property="Background" Value="#16A085"/>
+                                        <Setter Property="Foreground" Value="White"/>
+                                    </Trigger>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#ECF0F1"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataGrid.RowStyle>
+                    </DataGrid>
+                </DockPanel>
+            </Border>
+
+            <!-- Form nhập hàng -->
+            <Border Grid.Column="1" Background="White" BorderBrush="#BDC3C7" BorderThickness="1" CornerRadius="4">
+                <DockPanel>
+                    <TextBlock DockPanel.Dock="Top"
+                               Text="NHẬP PHIẾU HÀNG" 
+                               Background="#16A085" 
+                               Foreground="White" 
+                               Padding="10,8" 
+                               FontWeight="Bold"
+                               FontSize="13"/>
+                    <ScrollViewer DockPanel.Dock="Top">
+                        <StackPanel Margin="15">
+                            <!-- Nhà cung cấp -->
+                            <TextBlock Text="Nhà cung cấp *" FontWeight="Bold" FontSize="11" Foreground="#2C3E50" Margin="0,0,0,5"/>
+                            <TextBox x:Name="NhaCungCapTextBox"
+                                     Text="{Binding PhieuNhapMoi.NhaCungCap, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                     Padding="10,8"
+                                     BorderBrush="#BDC3C7"
+                                     BorderThickness="1"
+                                     FontSize="11"
+                                     Margin="0,0,0,12"/>
+
+                            <!-- Ngày nhập -->
+                            <TextBlock Text="Ngày nhập" FontWeight="Bold" FontSize="11" Foreground="#2C3E50" Margin="0,0,0,5"/>
+                            <TextBox x:Name="NgayNhapTextBox"
+                                     Text="{Binding PhieuNhapMoi.NgayNhap, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                     Padding="10,8"
+                                     BorderBrush="#BDC3C7"
+                                     BorderThickness="1"
+                                     FontSize="11"
+                                     IsReadOnly="True"
+                                     Background="#ECF0F1"
+                                     Margin="0,0,0,12"/>
+
+                            <!-- Separator -->
+                            <Separator Margin="0,10,0,10"/>
+
+                            <!-- Sản phẩm -->
+                            <TextBlock Text="Chọn sản phẩm *" FontWeight="Bold" FontSize="11" Foreground="#2C3E50" Margin="0,0,0,5"/>
+                            <ComboBox x:Name="SanPhamComboBox"
+                                      ItemsSource="{Binding DanhSachSanPham}"
+                                      DisplayMemberPath="TenSP"
+                                      SelectedValuePath="MaSP"
+                                      SelectedValue="{Binding ChiTietMoi.MaSP, Mode=TwoWay}"
+                                      Padding="10,8"
+                                      BorderBrush="#BDC3C7"
+                                      BorderThickness="1"
+                                      FontSize="11"
+                                      Margin="0,0,0,12"/>
+
+                            <!-- Số lượng -->
+                            <TextBlock Text="Số lượng nhập" FontWeight="Bold" FontSize="11" Foreground="#2C3E50" Margin="0,0,0,5"/>
+                            <TextBox x:Name="SoLuongTextBox"
+                                     Text="{Binding ChiTietMoi.SoLuongNhap, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                     Padding="10,8"
+                                     BorderBrush="#BDC3C7"
+                                     BorderThickness="1"
+                                     FontSize="11"
+                                     Margin="0,0,0,12"/>
+
+                            <!-- Giá nhập -->
+                            <TextBlock Text="Giá nhập (VNĐ)" FontWeight="Bold" FontSize="11" Foreground="#2C3E50" Margin="0,0,0,5"/>
+                            <TextBox x:Name="GiaNhapTextBox"
+                                     Text="{Binding ChiTietMoi.GiaNhap, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                     Padding="10,8"
+                                     BorderBrush="#BDC3C7"
+                                     BorderThickness="1"
+                                     FontSize="11"
+                                     Margin="0,0,0,20"/>
+
+                            <!-- Buttons -->
+                            <StackPanel Orientation="Vertical" Margin="0,10,0,0">
+                                <Button Command="{Binding ThemChiTietCommand}"
+                                        Padding="10,10"
+                                        Background="#27AE60"
+                                        Foreground="White"
+                                        FontWeight="Bold"
+                                        FontSize="11"
+                                        Cursor="Hand"
+                                        Content="➕ Thêm sản phẩm"
+                                        Margin="0,0,0,8">
+                                    <Button.Style>
+                                        <Style TargetType="Button">
+                                            <Setter Property="Background" Value="#27AE60"/>
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="#229954"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+
+                                <Button Command="{Binding XoaChiTietCommand}"
+                                        Padding="10,10"
+                                        Background="#E74C3C"
+                                        Foreground="White"
+                                        FontWeight="Bold"
+                                        FontSize="11"
+                                        Cursor="Hand"
+                                        Content="✕ Xóa sản phẩm"
+                                        Margin="0,0,0,8">
+                                    <Button.Style>
+                                        <Style TargetType="Button">
+                                            <Setter Property="Background" Value="#E74C3C"/>
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="#C0392B"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+
+                                <Button Command="{Binding LuuPhieuNhapCommand}"
+                                        Padding="10,10"
+                                        Background="#3498DB"
+                                        Foreground="White"
+                                        FontWeight="Bold"
+                                        FontSize="11"
+                                        Cursor="Hand"
+                                        Content="💾 Lưu phiếu">
+                                    <Button.Style>
+                                        <Style TargetType="Button">
+                                            <Setter Property="Background" Value="#3498DB"/>
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="#2980B9"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                            </StackPanel>
+                        </StackPanel>
+                    </ScrollViewer>
+                </DockPanel>
+            </Border>
+        </Grid>
+
+        <!-- Chi tiết phiếu nhập -->
+        <Border Grid.Row="3" 
+                Background="White" 
+                BorderBrush="#BDC3C7" 
+                BorderThickness="0,1,0,0"
+                Margin="10,0,10,10">
+            <DockPanel>
+                <TextBlock DockPanel.Dock="Top"
+                           Text="CHI TIẾT PHIẾU NHẬP" 
+                           Background="#16A085" 
+                           Foreground="White" 
+                           Padding="15,10" 
+                           FontWeight="Bold"
+                           FontSize="13"/>
+                <DataGrid x:Name="ChiTietGrid"
+                          ItemsSource="{Binding ChiTietPhieuNhap}"
+                          AutoGenerateColumns="False"
+                          Background="White"
+                          Foreground="#2C3E50"
+                          GridLinesVisibility="Horizontal"
+                          HeadersVisibility="Column"
+                          Margin="0"
+                          BorderThickness="0"
+                          MaxHeight="150">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Mã SP" Binding="{Binding MaSP}" Width="60" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Số lượng" Binding="{Binding SoLuongNhap}" Width="80" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Giá nhập (VNĐ)" Binding="{Binding GiaNhap}" Width="*" IsReadOnly="True"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </DockPanel>
+        </Border>
+
+        <!-- Status Bar -->
+        <Border Grid.Row="4" Background="#ECF0F1" BorderBrush="#BDC3C7" BorderThickness="0,1,0,0">
+            <Grid Margin="20,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0"
+                           Text="{Binding ThongBao}"
+                           Foreground="#2C3E50"
+                           FontSize="11"
+                           VerticalAlignment="Center"/>
+
+                <TextBlock Grid.Column="1"
+                           Text="{Binding TongTien, StringFormat='Tổng tiền: {0:N0} VNĐ'}"
+                           Foreground="#16A085"
+                           FontSize="12"
+                           FontWeight="Bold"
+                           VerticalAlignment="Center"
+                           Margin="20,0,20,0"/>
+
+                <ProgressBar Grid.Column="2"
+                             Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}"
+                             IsIndeterminate="True"
+                             Height="4"
+                             Width="100"/>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

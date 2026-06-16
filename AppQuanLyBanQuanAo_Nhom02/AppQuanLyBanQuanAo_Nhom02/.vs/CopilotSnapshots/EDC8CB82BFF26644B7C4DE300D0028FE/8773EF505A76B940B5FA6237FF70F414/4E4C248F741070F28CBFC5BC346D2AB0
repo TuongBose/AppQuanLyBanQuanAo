@@ -1,0 +1,266 @@
+﻿using AppQuanLyBanQuanAo_Nhom02.Models;
+using AppQuanLyBanQuanAo_Nhom02.Data;
+using AppQuanLyBanQuanAo_Nhom02.Untils;
+using System;
+using System.Collections.ObjectModel;
+using System.Windows.Input;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Linq;
+
+namespace AppQuanLyBanQuanAo_Nhom02.ViewModels
+{
+    public class NhanVienViewModel : INotifyPropertyChanged
+    {
+        private DatabaseService _databaseService = new DatabaseService();
+        private ObservableCollection<NhanVien> _danhSachNhanVien;
+        private NhanVien _nhanVienDangChon;
+        private NhanVien _nhanVienMoi;
+        private string _timKiem = "";
+        private bool _isLoading = false;
+        private string _thongBao = "";
+
+        public ObservableCollection<NhanVien> DanhSachNhanVien
+        {
+            get { return _danhSachNhanVien; }
+            set { _danhSachNhanVien = value; OnPropertyChanged(); }
+        }
+
+        public NhanVien NhanVienDangChon
+        {
+            get { return _nhanVienDangChon; }
+            set { _nhanVienDangChon = value; OnPropertyChanged(); }
+        }
+
+        public NhanVien NhanVienMoi
+        {
+            get { return _nhanVienMoi; }
+            set { _nhanVienMoi = value; OnPropertyChanged(); }
+        }
+
+        public string TimKiem
+        {
+            get { return _timKiem; }
+            set { _timKiem = value; OnPropertyChanged(); }
+        }
+
+        public bool IsLoading
+        {
+            get { return _isLoading; }
+            set { _isLoading = value; OnPropertyChanged(); }
+        }
+
+        public string ThongBao
+        {
+            get { return _thongBao; }
+            set { _thongBao = value; OnPropertyChanged(); }
+        }
+
+        public ICommand TaiDuLieuCommand { get; }
+        public ICommand ThemNhanVienCommand { get; }
+        public ICommand SuaNhanVienCommand { get; }
+        public ICommand XoaNhanVienCommand { get; }
+        public ICommand TimKiemCommand { get; }
+        public ICommand LamMoiCommand { get; }
+
+        public NhanVienViewModel()
+        {
+            DanhSachNhanVien = new ObservableCollection<NhanVien>();
+            NhanVienMoi = new NhanVien();
+
+            TaiDuLieuCommand = new RelayCommand(_ => TaiDuLieu());
+            ThemNhanVienCommand = new RelayCommand(_ => ThemNhanVien(), _ => CanThemNhanVien());
+            SuaNhanVienCommand = new RelayCommand(_ => SuaNhanVien(), _ => CanSuaNhanVien());
+            XoaNhanVienCommand = new RelayCommand(_ => XoaNhanVien(), _ => CanXoaNhanVien());
+            TimKiemCommand = new RelayCommand(_ => TimKiemNhanVien());
+            LamMoiCommand = new RelayCommand(_ => LamMoi());
+
+            TaiDuLieu();
+        }
+
+        private void TaiDuLieu()
+        {
+            try
+            {
+                IsLoading = true;
+                // TODO: Gọi DatabaseService để lấy danh sách nhân viên
+                // var danhSach = _databaseService.GetAllNhanVien();
+                // Tạm thời dùng dữ liệu mẫu
+                DanhSachNhanVien.Clear();
+                DanhSachNhanVien.Add(new NhanVien { MaNV = 1, TenNV = "Nguyễn Văn A", SDT = "0123456789", Username = "nva", Role = 1, TrangThai = 1 });
+                DanhSachNhanVien.Add(new NhanVien { MaNV = 2, TenNV = "Trần Thị B", SDT = "0987654321", Username = "ttb", Role = 0, TrangThai = 1 });
+                ThongBao = "Tải dữ liệu thành công!";
+            }
+            catch (Exception ex)
+            {
+                ThongBao = $"Lỗi: {ex.Message}";
+            }
+            finally
+            {
+                IsLoading = false;
+            }
+        }
+
+        private void ThemNhanVien()
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(NhanVienMoi.TenNV) || string.IsNullOrWhiteSpace(NhanVienMoi.Username))
+                {
+                    ThongBao = "Vui lòng nhập đầy đủ thông tin!";
+                    return;
+                }
+
+                // TODO: Gọi DatabaseService để thêm nhân viên
+                // _databaseService.AddNhanVien(NhanVienMoi);
+
+                DanhSachNhanVien.Add(new NhanVien
+                {
+                    MaNV = (DanhSachNhanVien.Any() ? DanhSachNhanVien.Max(x => x.MaNV) : 0) + 1,
+                    TenNV = NhanVienMoi.TenNV,
+                    SDT = NhanVienMoi.SDT,
+                    Username = NhanVienMoi.Username,
+                    PasswordHash = NhanVienMoi.PasswordHash,
+                    Role = NhanVienMoi.Role,
+                    TrangThai = 1
+                });
+
+                NhanVienMoi = new NhanVien();
+                ThongBao = "Thêm nhân viên thành công!";
+            }
+            catch (Exception ex)
+            {
+                ThongBao = $"Lỗi: {ex.Message}";
+            }
+        }
+
+        private void SuaNhanVien()
+        {
+            try
+            {
+                if (NhanVienDangChon == null)
+                {
+                    ThongBao = "Vui lòng chọn nhân viên để sửa!";
+                    return;
+                }
+
+                // TODO: Gọi DatabaseService để cập nhật nhân viên
+                // _databaseService.UpdateNhanVien(NhanVienDangChon);
+
+                ThongBao = "Cập nhật nhân viên thành công!";
+            }
+            catch (Exception ex)
+            {
+                ThongBao = $"Lỗi: {ex.Message}";
+            }
+        }
+
+        private void XoaNhanVien()
+        {
+            try
+            {
+                if (NhanVienDangChon == null)
+                {
+                    ThongBao = "Vui lòng chọn nhân viên để xóa!";
+                    return;
+                }
+
+                // TODO: Gọi DatabaseService để xóa nhân viên
+                // _databaseService.DeleteNhanVien(NhanVienDangChon.MaNV);
+
+                DanhSachNhanVien.Remove(NhanVienDangChon);
+                NhanVienDangChon = null;
+                ThongBao = "Xóa nhân viên thành công!";
+            }
+            catch (Exception ex)
+            {
+                ThongBao = $"Lỗi: {ex.Message}";
+            }
+        }
+
+        private void TimKiemNhanVien()
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(TimKiem))
+                {
+                    TaiDuLieu();
+                    return;
+                }
+
+                // TODO: Gọi DatabaseService để tìm kiếm
+                // var ketQua = _databaseService.SearchNhanVien(TimKiem);
+                // Tạm thời tìm kiếm trong danh sách hiện tại
+                var ketQua = DanhSachNhanVien.Where(x =>
+                    x.TenNV.Contains(TimKiem, StringComparison.OrdinalIgnoreCase) ||
+                    x.Username.Contains(TimKiem, StringComparison.OrdinalIgnoreCase) ||
+                    x.SDT.Contains(TimKiem)
+                ).ToList();
+
+                DanhSachNhanVien.Clear();
+                foreach (var nv in ketQua)
+                {
+                    DanhSachNhanVien.Add(nv);
+                }
+
+                ThongBao = $"Tìm thấy {ketQua.Count} nhân viên";
+            }
+            catch (Exception ex)
+            {
+                ThongBao = $"Lỗi: {ex.Message}";
+            }
+        }
+
+        private void LamMoi()
+        {
+            TimKiem = "";
+            NhanVienMoi = new NhanVien();
+            NhanVienDangChon = null;
+            TaiDuLieu();
+        }
+
+        private bool CanThemNhanVien()
+        {
+            return !string.IsNullOrWhiteSpace(NhanVienMoi?.TenNV);
+        }
+
+        private bool CanSuaNhanVien()
+        {
+            return NhanVienDangChon != null;
+        }
+
+        private bool CanXoaNhanVien()
+        {
+            return NhanVienDangChon != null;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+    }
+
+    // RelayCommand Implementation
+    public class RelayCommand : ICommand
+    {
+        private readonly Action<object> _execute;
+        private readonly Predicate<object> _canExecute;
+
+        public RelayCommand(Action<object> execute, Predicate<object> canExecute = null)
+        {
+            _execute = execute ?? throw new ArgumentNullException(nameof(execute));
+            _canExecute = canExecute;
+        }
+
+        public event EventHandler CanExecuteChanged
+        {
+            add { CommandManager.RequerySuggested += value; }
+            remove { CommandManager.RequerySuggested -= value; }
+        }
+
+        public bool CanExecute(object parameter) => _canExecute?.Invoke(parameter) ?? true;
+        public void Execute(object parameter) => _execute(parameter);
+    }
+}

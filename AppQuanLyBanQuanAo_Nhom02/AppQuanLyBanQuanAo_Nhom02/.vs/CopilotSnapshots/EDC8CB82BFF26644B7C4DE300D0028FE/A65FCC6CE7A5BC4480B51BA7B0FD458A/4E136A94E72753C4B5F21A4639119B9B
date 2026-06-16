@@ -1,0 +1,299 @@
+﻿using AppQuanLyBanQuanAo_Nhom02.Models;
+using AppQuanLyBanQuanAo_Nhom02.Data;
+using System;
+using System.Collections.ObjectModel;
+using System.Windows.Input;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Linq;
+
+namespace AppQuanLyBanQuanAo_Nhom02.ViewModels
+{
+    public class NhapHangViewModel : INotifyPropertyChanged
+    {
+        private DatabaseService _databaseService = new DatabaseService();
+        private ObservableCollection<PhieuNhap> _danhSachPhieuNhap;
+        private ObservableCollection<SanPham> _danhSachSanPham;
+        private ObservableCollection<ChiTietPhieuNhap> _chiTietPhieuNhap;
+        private PhieuNhap _phieuNhapDangChon;
+        private PhieuNhap _phieuNhapMoi;
+        private ChiTietPhieuNhap _chiTietMoi;
+        private string _timKiem = "";
+        private bool _isLoading = false;
+        private string _thongBao = "";
+        private int _tongTien = 0;
+
+        public ObservableCollection<PhieuNhap> DanhSachPhieuNhap
+        {
+            get { return _danhSachPhieuNhap; }
+            set { _danhSachPhieuNhap = value; OnPropertyChanged(); }
+        }
+
+        public ObservableCollection<SanPham> DanhSachSanPham
+        {
+            get { return _danhSachSanPham; }
+            set { _danhSachSanPham = value; OnPropertyChanged(); }
+        }
+
+        public ObservableCollection<ChiTietPhieuNhap> ChiTietPhieuNhap
+        {
+            get { return _chiTietPhieuNhap; }
+            set { _chiTietPhieuNhap = value; OnPropertyChanged(); }
+        }
+
+        public PhieuNhap PhieuNhapDangChon
+        {
+            get { return _phieuNhapDangChon; }
+            set { _phieuNhapDangChon = value; OnPropertyChanged(); }
+        }
+
+        public PhieuNhap PhieuNhapMoi
+        {
+            get { return _phieuNhapMoi; }
+            set { _phieuNhapMoi = value; OnPropertyChanged(); }
+        }
+
+        public ChiTietPhieuNhap ChiTietMoi
+        {
+            get { return _chiTietMoi; }
+            set { _chiTietMoi = value; OnPropertyChanged(); }
+        }
+
+        public string TimKiem
+        {
+            get { return _timKiem; }
+            set { _timKiem = value; OnPropertyChanged(); }
+        }
+
+        public bool IsLoading
+        {
+            get { return _isLoading; }
+            set { _isLoading = value; OnPropertyChanged(); }
+        }
+
+        public string ThongBao
+        {
+            get { return _thongBao; }
+            set { _thongBao = value; OnPropertyChanged(); }
+        }
+
+        public int TongTien
+        {
+            get { return _tongTien; }
+            set { _tongTien = value; OnPropertyChanged(); }
+        }
+
+        public ICommand TaiDuLieuCommand { get; }
+        public ICommand TaoPhieuNhapCommand { get; }
+        public ICommand ThemChiTietCommand { get; }
+        public ICommand XoaChiTietCommand { get; }
+        public ICommand LuuPhieuNhapCommand { get; }
+        public ICommand TimKiemCommand { get; }
+        public ICommand LamMoiCommand { get; }
+
+        public NhapHangViewModel()
+        {
+            DanhSachPhieuNhap = new ObservableCollection<PhieuNhap>();
+            DanhSachSanPham = new ObservableCollection<SanPham>();
+            ChiTietPhieuNhap = new ObservableCollection<ChiTietPhieuNhap>();
+            PhieuNhapMoi = new PhieuNhap();
+            ChiTietMoi = new ChiTietPhieuNhap();
+
+            TaiDuLieuCommand = new RelayCommand(_ => TaiDuLieu());
+            TaoPhieuNhapCommand = new RelayCommand(_ => TaoPhieuNhap());
+            ThemChiTietCommand = new RelayCommand(_ => ThemChiTiet(), _ => CanThemChiTiet());
+            XoaChiTietCommand = new RelayCommand(_ => XoaChiTiet());
+            LuuPhieuNhapCommand = new RelayCommand(_ => LuuPhieuNhap(), _ => CanLuuPhieuNhap());
+            TimKiemCommand = new RelayCommand(_ => TimKiemPhieuNhap());
+            LamMoiCommand = new RelayCommand(_ => LamMoi());
+
+            TaiDuLieu();
+        }
+
+        private void TaiDuLieu()
+        {
+            try
+            {
+                IsLoading = true;
+                // TODO: Lấy danh sách phiếu nhập và sản phẩm từ DB
+                DanhSachPhieuNhap.Clear();
+                DanhSachSanPham.Clear();
+
+                DanhSachPhieuNhap.Add(new PhieuNhap { MaPN = 1, MaNV = 1, NhaCungCap = "ABC Supply", NgayNhap = DateTime.Now.ToString("dd/MM/yyyy"), TongTien = 5000000 });
+                DanhSachPhieuNhap.Add(new PhieuNhap { MaPN = 2, MaNV = 2, NhaCungCap = "XYZ Group", NgayNhap = DateTime.Now.ToString("dd/MM/yyyy"), TongTien = 3000000 });
+
+                DanhSachSanPham.Add(new SanPham { MaSP = 1, TenSP = "Áo Thun Nam", Size = "M", MauSac = "Trắng", GiaBan = 150000, SoLuongTon = 50 });
+                DanhSachSanPham.Add(new SanPham { MaSP = 2, TenSP = "Áo Thun Nữ", Size = "L", MauSac = "Đen", GiaBan = 140000, SoLuongTon = 40 });
+
+                ThongBao = "Tải dữ liệu thành công!";
+            }
+            catch (Exception ex)
+            {
+                ThongBao = $"Lỗi: {ex.Message}";
+            }
+            finally
+            {
+                IsLoading = false;
+            }
+        }
+
+        private void TaoPhieuNhap()
+        {
+            try
+            {
+                ChiTietPhieuNhap.Clear();
+                PhieuNhapMoi = new PhieuNhap { NgayNhap = DateTime.Now.ToString("dd/MM/yyyy") };
+                TongTien = 0;
+                ThongBao = "Tạo phiếu nhập mới thành công!";
+            }
+            catch (Exception ex)
+            {
+                ThongBao = $"Lỗi: {ex.Message}";
+            }
+        }
+
+        private void ThemChiTiet()
+        {
+            try
+            {
+                if (ChiTietMoi.MaSP <= 0 || ChiTietMoi.SoLuongNhap <= 0 || ChiTietMoi.GiaNhap <= 0)
+                {
+                    ThongBao = "Vui lòng nhập đầy đủ thông tin chi tiết!";
+                    return;
+                }
+
+                ChiTietPhieuNhap.Add(new ChiTietPhieuNhap
+                {
+                    MaSP = ChiTietMoi.MaSP,
+                    SoLuongNhap = ChiTietMoi.SoLuongNhap,
+                    GiaNhap = ChiTietMoi.GiaNhap
+                });
+
+                TongTien += ChiTietMoi.SoLuongNhap * ChiTietMoi.GiaNhap;
+                PhieuNhapMoi.TongTien = TongTien;
+                ChiTietMoi = new ChiTietPhieuNhap();
+
+                ThongBao = "Thêm chi tiết phiếu nhập thành công!";
+            }
+            catch (Exception ex)
+            {
+                ThongBao = $"Lỗi: {ex.Message}";
+            }
+        }
+
+        private void XoaChiTiet()
+        {
+            try
+            {
+                if (ChiTietPhieuNhap.Count == 0)
+                {
+                    ThongBao = "Không có chi tiết nào để xóa!";
+                    return;
+                }
+
+                var lastItem = ChiTietPhieuNhap.Last();
+                TongTien -= lastItem.SoLuongNhap * lastItem.GiaNhap;
+                PhieuNhapMoi.TongTien = TongTien;
+                ChiTietPhieuNhap.Remove(lastItem);
+
+                ThongBao = "Xóa chi tiết thành công!";
+            }
+            catch (Exception ex)
+            {
+                ThongBao = $"Lỗi: {ex.Message}";
+            }
+        }
+
+        private void LuuPhieuNhap()
+        {
+            try
+            {
+                if (ChiTietPhieuNhap.Count == 0)
+                {
+                    ThongBao = "Vui lòng thêm ít nhất một chi tiết!";
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(PhieuNhapMoi.NhaCungCap))
+                {
+                    ThongBao = "Vui lòng nhập tên nhà cung cấp!";
+                    return;
+                }
+
+                // TODO: Lưu vào DB
+                DanhSachPhieuNhap.Add(new PhieuNhap
+                {
+                    MaPN = (DanhSachPhieuNhap.Any() ? DanhSachPhieuNhap.Max(x => x.MaPN) : 0) + 1,
+                    MaNV = PhieuNhapMoi.MaNV,
+                    NhaCungCap = PhieuNhapMoi.NhaCungCap,
+                    NgayNhap = PhieuNhapMoi.NgayNhap,
+                    TongTien = TongTien
+                });
+
+                ChiTietPhieuNhap.Clear();
+                PhieuNhapMoi = new PhieuNhap();
+                TongTien = 0;
+                ThongBao = "Lưu phiếu nhập thành công!";
+            }
+            catch (Exception ex)
+            {
+                ThongBao = $"Lỗi: {ex.Message}";
+            }
+        }
+
+        private void TimKiemPhieuNhap()
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(TimKiem))
+                {
+                    TaiDuLieu();
+                    return;
+                }
+
+                var ketQua = DanhSachPhieuNhap.Where(x =>
+                    x.NhaCungCap.Contains(TimKiem, StringComparison.OrdinalIgnoreCase)
+                ).ToList();
+
+                DanhSachPhieuNhap.Clear();
+                foreach (var pn in ketQua)
+                {
+                    DanhSachPhieuNhap.Add(pn);
+                }
+
+                ThongBao = $"Tìm thấy {ketQua.Count} phiếu nhập";
+            }
+            catch (Exception ex)
+            {
+                ThongBao = $"Lỗi: {ex.Message}";
+            }
+        }
+
+        private void LamMoi()
+        {
+            TimKiem = "";
+            ChiTietPhieuNhap.Clear();
+            PhieuNhapMoi = new PhieuNhap();
+            ChiTietMoi = new ChiTietPhieuNhap();
+            TongTien = 0;
+            TaiDuLieu();
+        }
+
+        private bool CanThemChiTiet()
+        {
+            return ChiTietMoi?.MaSP > 0 && ChiTietMoi?.SoLuongNhap > 0;
+        }
+
+        private bool CanLuuPhieuNhap()
+        {
+            return !string.IsNullOrWhiteSpace(PhieuNhapMoi?.NhaCungCap) && ChiTietPhieuNhap.Count > 0;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+    }
+}

@@ -1,0 +1,255 @@
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Windows.Input;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.IO;
+using System.Diagnostics;
+
+namespace AppQuanLyBanQuanAo_Nhom02.ViewModels
+{
+    public class SaoLuuViewModel : INotifyPropertyChanged
+    {
+        private ObservableCollection<string> _danhSachBackup;
+        private string _duongDanBackup;
+        private bool _isLoading = false;
+        private string _thongBao = "";
+        private int _tienDoSaoLuu = 0;
+        private DateTime _thoiGianCuoiSaoLuu;
+        private long _dungLuongBackup = 0;
+
+        public ObservableCollection<string> DanhSachBackup
+        {
+            get { return _danhSachBackup; }
+            set { _danhSachBackup = value; OnPropertyChanged(); }
+        }
+
+        public string DuongDanBackup
+        {
+            get { return _duongDanBackup; }
+            set { _duongDanBackup = value; OnPropertyChanged(); }
+        }
+
+        public bool IsLoading
+        {
+            get { return _isLoading; }
+            set { _isLoading = value; OnPropertyChanged(); }
+        }
+
+        public string ThongBao
+        {
+            get { return _thongBao; }
+            set { _thongBao = value; OnPropertyChanged(); }
+        }
+
+        public int TienDoSaoLuu
+        {
+            get { return _tienDoSaoLuu; }
+            set { _tienDoSaoLuu = value; OnPropertyChanged(); }
+        }
+
+        public DateTime ThoiGianCuoiSaoLuu
+        {
+            get { return _thoiGianCuoiSaoLuu; }
+            set { _thoiGianCuoiSaoLuu = value; OnPropertyChanged(); }
+        }
+
+        public long DungLuongBackup
+        {
+            get { return _dungLuongBackup; }
+            set { _dungLuongBackup = value; OnPropertyChanged(); }
+        }
+
+        public ICommand SaoLuuNgayCommand { get; }
+        public ICommand PhucHoiCommand { get; }
+        public ICommand ChonThuMucCommand { get; }
+        public ICommand XoaBackupCommand { get; }
+        public ICommand TaiDuLieuCommand { get; }
+
+        public SaoLuuViewModel()
+        {
+            DanhSachBackup = new ObservableCollection<string>();
+            DuongDanBackup = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "AppBackup");
+
+            SaoLuuNgayCommand = new RelayCommand(_ => SaoLuuNgay());
+            PhucHoiCommand = new RelayCommand(_ => PhucHoi(), _ => DanhSachBackup.Count > 0);
+            ChonThuMucCommand = new RelayCommand(_ => ChonThuMuc());
+            XoaBackupCommand = new RelayCommand(_ => XoaBackup(), _ => DanhSachBackup.Count > 0);
+            TaiDuLieuCommand = new RelayCommand(_ => TaiDuLieu());
+
+            // Tạo thư mục nếu chưa tồn tại
+            if (!Directory.Exists(DuongDanBackup))
+                Directory.CreateDirectory(DuongDanBackup);
+
+            TaiDuLieu();
+        }
+
+        private void TaiDuLieu()
+        {
+            try
+            {
+                IsLoading = true;
+                DanhSachBackup.Clear();
+
+                if (!Directory.Exists(DuongDanBackup))
+                {
+                    ThongBao = "Thư mục backup chưa được tạo!";
+                    return;
+                }
+
+                var files = Directory.GetFiles(DuongDanBackup, "*.bak");
+                foreach (var file in files)
+                {
+                    DanhSachBackup.Add(Path.GetFileName(file));
+                    DungLuongBackup += new FileInfo(file).Length;
+                }
+
+                if (DanhSachBackup.Count > 0)
+                {
+                    ThongBao = $"Tìm thấy {DanhSachBackup.Count} file backup";
+                    ThoiGianCuoiSaoLuu = new FileInfo(Path.Combine(DuongDanBackup, DanhSachBackup[0])).LastWriteTime;
+                }
+                else
+                {
+                    ThongBao = "Chưa có backup nào. Hãy tạo backup mới!";
+                }
+            }
+            catch (Exception ex)
+            {
+                ThongBao = $"Lỗi: {ex.Message}";
+            }
+            finally
+            {
+                IsLoading = false;
+            }
+        }
+
+        private void SaoLuuNgay()
+        {
+            try
+            {
+                IsLoading = true;
+                TienDoSaoLuu = 0;
+
+                string backupFileName = $"Backup_{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.bak";
+                string backupPath = Path.Combine(DuongDanBackup, backupFileName);
+
+                // TODO: Thực hiện sao lưu dữ liệu từ database
+                // Hiện tại chỉ tạo file placeholder
+                for (int i = 0; i <= 100; i += 10)
+                {
+                    TienDoSaoLuu = i;
+                    System.Threading.Thread.Sleep(100);
+                }
+
+                File.Create(backupPath).Close();
+
+                DanhSachBackup.Add(backupFileName);
+                ThoiGianCuoiSaoLuu = DateTime.Now;
+                DungLuongBackup = new FileInfo(backupPath).Length;
+
+                ThongBao = $"✓ Sao lưu thành công! File: {backupFileName}";
+                TienDoSaoLuu = 100;
+            }
+            catch (Exception ex)
+            {
+                ThongBao = $"Lỗi sao lưu: {ex.Message}";
+            }
+            finally
+            {
+                IsLoading = false;
+            }
+        }
+
+        private void PhucHoi()
+        {
+            try
+            {
+                if (DanhSachBackup.Count == 0)
+                {
+                    ThongBao = "Không có file backup để phục hồi!";
+                    return;
+                }
+
+                IsLoading = true;
+                TienDoSaoLuu = 0;
+
+                string backupFile = DanhSachBackup[0];
+                string backupPath = Path.Combine(DuongDanBackup, backupFile);
+
+                // TODO: Thực hiện phục hồi dữ liệu từ backup
+                for (int i = 0; i <= 100; i += 10)
+                {
+                    TienDoSaoLuu = i;
+                    System.Threading.Thread.Sleep(100);
+                }
+
+                ThongBao = $"✓ Phục hồi dữ liệu thành công từ: {backupFile}";
+                TienDoSaoLuu = 100;
+            }
+            catch (Exception ex)
+            {
+                ThongBao = $"Lỗi phục hồi: {ex.Message}";
+            }
+            finally
+            {
+                IsLoading = false;
+            }
+        }
+
+        private void ChonThuMuc()
+        {
+            try
+            {
+                using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
+                {
+                    dialog.SelectedPath = DuongDanBackup;
+                    if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    {
+                        DuongDanBackup = dialog.SelectedPath;
+                        ThongBao = $"Đã chọn thư mục: {DuongDanBackup}";
+                        TaiDuLieu();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ThongBao = $"Lỗi: {ex.Message}";
+            }
+        }
+
+        private void XoaBackup()
+        {
+            try
+            {
+                if (DanhSachBackup.Count == 0)
+                {
+                    ThongBao = "Không có backup để xóa!";
+                    return;
+                }
+
+                string backupFile = DanhSachBackup[0];
+                string backupPath = Path.Combine(DuongDanBackup, backupFile);
+
+                if (File.Exists(backupPath))
+                {
+                    File.Delete(backupPath);
+                    DanhSachBackup.Remove(backupFile);
+                    ThongBao = $"✓ Đã xóa file backup: {backupFile}";
+                    TaiDuLieu();
+                }
+            }
+            catch (Exception ex)
+            {
+                ThongBao = $"Lỗi xóa backup: {ex.Message}";
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+    }
+}

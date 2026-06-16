@@ -1,0 +1,187 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\HocTap\\cnnet\\final\\AppQuanLyBanQuanAo_Nhom02\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{6E298565-F4D9-69C1-5927-2B93509BE889}|AppQuanLyBanQuanAo_Nhom02\\AppQuanLyBanQuanAo_Nhom02.csproj|d:\\hoctap\\cnnet\\final\\appquanlybanquanao_nhom02\\appquanlybanquanao_nhom02\\viewmodels\\khachhangviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6E298565-F4D9-69C1-5927-2B93509BE889}|AppQuanLyBanQuanAo_Nhom02\\AppQuanLyBanQuanAo_Nhom02.csproj|solutionrelative:appquanlybanquanao_nhom02\\viewmodels\\khachhangviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E298565-F4D9-69C1-5927-2B93509BE889}|AppQuanLyBanQuanAo_Nhom02\\AppQuanLyBanQuanAo_Nhom02.csproj|d:\\hoctap\\cnnet\\final\\appquanlybanquanao_nhom02\\appquanlybanquanao_nhom02\\viewmodels\\baocaoviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6E298565-F4D9-69C1-5927-2B93509BE889}|AppQuanLyBanQuanAo_Nhom02\\AppQuanLyBanQuanAo_Nhom02.csproj|solutionrelative:appquanlybanquanao_nhom02\\viewmodels\\baocaoviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E298565-F4D9-69C1-5927-2B93509BE889}|AppQuanLyBanQuanAo_Nhom02\\AppQuanLyBanQuanAo_Nhom02.csproj|d:\\hoctap\\cnnet\\final\\appquanlybanquanao_nhom02\\appquanlybanquanao_nhom02\\untils\\converters\\roletovisibilityconverter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6E298565-F4D9-69C1-5927-2B93509BE889}|AppQuanLyBanQuanAo_Nhom02\\AppQuanLyBanQuanAo_Nhom02.csproj|solutionrelative:appquanlybanquanao_nhom02\\untils\\converters\\roletovisibilityconverter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E298565-F4D9-69C1-5927-2B93509BE889}|AppQuanLyBanQuanAo_Nhom02\\AppQuanLyBanQuanAo_Nhom02.csproj|d:\\hoctap\\cnnet\\final\\appquanlybanquanao_nhom02\\appquanlybanquanao_nhom02\\untils\\globalstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6E298565-F4D9-69C1-5927-2B93509BE889}|AppQuanLyBanQuanAo_Nhom02\\AppQuanLyBanQuanAo_Nhom02.csproj|solutionrelative:appquanlybanquanao_nhom02\\untils\\globalstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E298565-F4D9-69C1-5927-2B93509BE889}|AppQuanLyBanQuanAo_Nhom02\\AppQuanLyBanQuanAo_Nhom02.csproj|d:\\hoctap\\cnnet\\final\\appquanlybanquanao_nhom02\\appquanlybanquanao_nhom02\\untils\\khohangchangedmessage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6E298565-F4D9-69C1-5927-2B93509BE889}|AppQuanLyBanQuanAo_Nhom02\\AppQuanLyBanQuanAo_Nhom02.csproj|solutionrelative:appquanlybanquanao_nhom02\\untils\\khohangchangedmessage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E298565-F4D9-69C1-5927-2B93509BE889}|AppQuanLyBanQuanAo_Nhom02\\AppQuanLyBanQuanAo_Nhom02.csproj|d:\\hoctap\\cnnet\\final\\appquanlybanquanao_nhom02\\appquanlybanquanao_nhom02\\untils\\passwordhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6E298565-F4D9-69C1-5927-2B93509BE889}|AppQuanLyBanQuanAo_Nhom02\\AppQuanLyBanQuanAo_Nhom02.csproj|solutionrelative:appquanlybanquanao_nhom02\\untils\\passwordhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E298565-F4D9-69C1-5927-2B93509BE889}|AppQuanLyBanQuanAo_Nhom02\\AppQuanLyBanQuanAo_Nhom02.csproj|d:\\hoctap\\cnnet\\final\\appquanlybanquanao_nhom02\\appquanlybanquanao_nhom02\\models\\maxacnhan.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6E298565-F4D9-69C1-5927-2B93509BE889}|AppQuanLyBanQuanAo_Nhom02\\AppQuanLyBanQuanAo_Nhom02.csproj|solutionrelative:appquanlybanquanao_nhom02\\models\\maxacnhan.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E298565-F4D9-69C1-5927-2B93509BE889}|AppQuanLyBanQuanAo_Nhom02\\AppQuanLyBanQuanAo_Nhom02.csproj|d:\\hoctap\\cnnet\\final\\appquanlybanquanao_nhom02\\appquanlybanquanao_nhom02\\messages\\navigationmessage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6E298565-F4D9-69C1-5927-2B93509BE889}|AppQuanLyBanQuanAo_Nhom02\\AppQuanLyBanQuanAo_Nhom02.csproj|solutionrelative:appquanlybanquanao_nhom02\\messages\\navigationmessage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E298565-F4D9-69C1-5927-2B93509BE889}|AppQuanLyBanQuanAo_Nhom02\\AppQuanLyBanQuanAo_Nhom02.csproj|d:\\hoctap\\cnnet\\final\\appquanlybanquanao_nhom02\\appquanlybanquanao_nhom02\\data\\huit02database.sqbpro||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{6E298565-F4D9-69C1-5927-2B93509BE889}|AppQuanLyBanQuanAo_Nhom02\\AppQuanLyBanQuanAo_Nhom02.csproj|solutionrelative:appquanlybanquanao_nhom02\\data\\huit02database.sqbpro||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "KhachHangViewModel.cs",
+              "DocumentMoniker": "D:\\HocTap\\cnnet\\final\\AppQuanLyBanQuanAo_Nhom02\\AppQuanLyBanQuanAo_Nhom02\\ViewModels\\KhachHangViewModel.cs",
+              "RelativeDocumentMoniker": "AppQuanLyBanQuanAo_Nhom02\\ViewModels\\KhachHangViewModel.cs",
+              "ToolTip": "D:\\HocTap\\cnnet\\final\\AppQuanLyBanQuanAo_Nhom02\\AppQuanLyBanQuanAo_Nhom02\\ViewModels\\KhachHangViewModel.cs",
+              "RelativeToolTip": "AppQuanLyBanQuanAo_Nhom02\\ViewModels\\KhachHangViewModel.cs",
+              "ViewState": "AgIAAHcAAAAAAAAAAAAAwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-10T09:26:06.024Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "BaoCaoViewModel.cs",
+              "DocumentMoniker": "D:\\HocTap\\cnnet\\final\\AppQuanLyBanQuanAo_Nhom02\\AppQuanLyBanQuanAo_Nhom02\\ViewModels\\BaoCaoViewModel.cs",
+              "RelativeDocumentMoniker": "AppQuanLyBanQuanAo_Nhom02\\ViewModels\\BaoCaoViewModel.cs",
+              "ToolTip": "D:\\HocTap\\cnnet\\final\\AppQuanLyBanQuanAo_Nhom02\\AppQuanLyBanQuanAo_Nhom02\\ViewModels\\BaoCaoViewModel.cs",
+              "RelativeToolTip": "AppQuanLyBanQuanAo_Nhom02\\ViewModels\\BaoCaoViewModel.cs",
+              "ViewState": "AgIAAKUAAAAAAAAAAAAowFEBAABDAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-10T09:24:44.574Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "RoleToVisibilityConverter.cs",
+              "DocumentMoniker": "D:\\HocTap\\cnnet\\final\\AppQuanLyBanQuanAo_Nhom02\\AppQuanLyBanQuanAo_Nhom02\\Untils\\Converters\\RoleToVisibilityConverter.cs",
+              "RelativeDocumentMoniker": "AppQuanLyBanQuanAo_Nhom02\\Untils\\Converters\\RoleToVisibilityConverter.cs",
+              "ToolTip": "D:\\HocTap\\cnnet\\final\\AppQuanLyBanQuanAo_Nhom02\\AppQuanLyBanQuanAo_Nhom02\\Untils\\Converters\\RoleToVisibilityConverter.cs",
+              "RelativeToolTip": "AppQuanLyBanQuanAo_Nhom02\\Untils\\Converters\\RoleToVisibilityConverter.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAQwB0AAAA7AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-10T09:05:49.054Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "GlobalState.cs",
+              "DocumentMoniker": "D:\\HocTap\\cnnet\\final\\AppQuanLyBanQuanAo_Nhom02\\AppQuanLyBanQuanAo_Nhom02\\Untils\\GlobalState.cs",
+              "RelativeDocumentMoniker": "AppQuanLyBanQuanAo_Nhom02\\Untils\\GlobalState.cs",
+              "ToolTip": "D:\\HocTap\\cnnet\\final\\AppQuanLyBanQuanAo_Nhom02\\AppQuanLyBanQuanAo_Nhom02\\Untils\\GlobalState.cs",
+              "RelativeToolTip": "AppQuanLyBanQuanAo_Nhom02\\Untils\\GlobalState.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-10T09:05:42.283Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "KhoHangChangedMessage.cs",
+              "DocumentMoniker": "D:\\HocTap\\cnnet\\final\\AppQuanLyBanQuanAo_Nhom02\\AppQuanLyBanQuanAo_Nhom02\\Untils\\KhoHangChangedMessage.cs",
+              "RelativeDocumentMoniker": "AppQuanLyBanQuanAo_Nhom02\\Untils\\KhoHangChangedMessage.cs",
+              "ToolTip": "D:\\HocTap\\cnnet\\final\\AppQuanLyBanQuanAo_Nhom02\\AppQuanLyBanQuanAo_Nhom02\\Untils\\KhoHangChangedMessage.cs",
+              "RelativeToolTip": "AppQuanLyBanQuanAo_Nhom02\\Untils\\KhoHangChangedMessage.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-10T09:05:38.215Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "PasswordHelper.cs",
+              "DocumentMoniker": "D:\\HocTap\\cnnet\\final\\AppQuanLyBanQuanAo_Nhom02\\AppQuanLyBanQuanAo_Nhom02\\Untils\\PasswordHelper.cs",
+              "RelativeDocumentMoniker": "AppQuanLyBanQuanAo_Nhom02\\Untils\\PasswordHelper.cs",
+              "ToolTip": "D:\\HocTap\\cnnet\\final\\AppQuanLyBanQuanAo_Nhom02\\AppQuanLyBanQuanAo_Nhom02\\Untils\\PasswordHelper.cs",
+              "RelativeToolTip": "AppQuanLyBanQuanAo_Nhom02\\Untils\\PasswordHelper.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-10T09:05:34.541Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "MaXacNhan.cs",
+              "DocumentMoniker": "D:\\HocTap\\cnnet\\final\\AppQuanLyBanQuanAo_Nhom02\\AppQuanLyBanQuanAo_Nhom02\\Models\\MaXacNhan.cs",
+              "RelativeDocumentMoniker": "AppQuanLyBanQuanAo_Nhom02\\Models\\MaXacNhan.cs",
+              "ToolTip": "D:\\HocTap\\cnnet\\final\\AppQuanLyBanQuanAo_Nhom02\\AppQuanLyBanQuanAo_Nhom02\\Models\\MaXacNhan.cs",
+              "RelativeToolTip": "AppQuanLyBanQuanAo_Nhom02\\Models\\MaXacNhan.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-10T09:05:28.761Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "NavigationMessage.cs",
+              "DocumentMoniker": "D:\\HocTap\\cnnet\\final\\AppQuanLyBanQuanAo_Nhom02\\AppQuanLyBanQuanAo_Nhom02\\Messages\\NavigationMessage.cs",
+              "RelativeDocumentMoniker": "AppQuanLyBanQuanAo_Nhom02\\Messages\\NavigationMessage.cs",
+              "ToolTip": "D:\\HocTap\\cnnet\\final\\AppQuanLyBanQuanAo_Nhom02\\AppQuanLyBanQuanAo_Nhom02\\Messages\\NavigationMessage.cs",
+              "RelativeToolTip": "AppQuanLyBanQuanAo_Nhom02\\Messages\\NavigationMessage.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-10T09:05:16.633Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "HUIT02DataBase.sqbpro",
+              "DocumentMoniker": "D:\\HocTap\\cnnet\\final\\AppQuanLyBanQuanAo_Nhom02\\AppQuanLyBanQuanAo_Nhom02\\Data\\HUIT02DataBase.sqbpro",
+              "RelativeDocumentMoniker": "AppQuanLyBanQuanAo_Nhom02\\Data\\HUIT02DataBase.sqbpro",
+              "ToolTip": "D:\\HocTap\\cnnet\\final\\AppQuanLyBanQuanAo_Nhom02\\AppQuanLyBanQuanAo_Nhom02\\Data\\HUIT02DataBase.sqbpro",
+              "RelativeToolTip": "AppQuanLyBanQuanAo_Nhom02\\Data\\HUIT02DataBase.sqbpro",
+              "ViewState": "AgIAAI0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-06-10T08:59:02.861Z",
+              "EditorCaption": ""
+            }
+          ]
+        },
+        {
+          "DockedWidth": 1121,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
